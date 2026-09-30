@@ -12,8 +12,8 @@ html {
 }
 
 body {
-  background: #111714;
-  color: #f1f4ef;
+  background: #f6f7f6;
+  color: #202923;
   font-family: 'DM Sans', sans-serif;
 }
 
@@ -33,6 +33,6 @@ a {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 2px solid #8fe0b5;
+  outline: 2px solid #28744f;
   outline-offset: 3px;
 }

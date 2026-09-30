@@ -1,10 +1,10 @@
 :root {
-  --page: #111714;
-  --surface: #19211d;
-  --line: #303b35;
-  --text: #f1f4ef;
-  --muted: #a4afa8;
-  --accent: #8fe0b5;
+  --page: #f6f7f6;
+  --surface: #ffffff;
+  --line: #d8dfda;
+  --text: #202923;
+  --muted: #59665e;
+  --accent: #28744f;
 }
 
 .app {
@@ -126,7 +126,7 @@
   aspect-ratio: 2 / 3;
   overflow: hidden;
   border-radius: 4px;
-  background: var(--surface);
+  background: #edf0ed;
 }
 
 .poster-container img,
@@ -157,7 +157,7 @@
 
 .movie-info p {
   margin: 0;
-  color: var(--accent);
+  color: #775b12;
 }
 
 .status-state {
@@ -177,6 +177,12 @@
   border-radius: 4px;
   color: var(--text);
   background: var(--surface);
+}
+
+.status-state button:hover,
+.imdb-link:hover {
+  border-color: var(--accent);
+  background: #f0f5f1;
 }
 
 .detail-page {
