@@ -91,6 +91,25 @@
   color: var(--muted);
 }
 
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: -8px 0 22px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.category-filter select {
+  min-width: 148px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+  background: var(--surface);
+}
+
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

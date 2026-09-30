@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes, useParams } from "react-router-dom";
 import "./App.css";
 
-const featuredTitles = ["Zootopia", "Toy Story 2", "Up", "Finding Nemo", "Moana"];
+const featuredMovies = [
+  { title: "Zootopia", category: "Adventure", rating: "8.0" },
+  { title: "Toy Story 2", category: "Comedy", rating: "7.9" },
+  { title: "Up", category: "Adventure", rating: "8.3" },
+  { title: "Finding Nemo", category: "Family", rating: "8.2" },
+  { title: "Moana", category: "Fantasy", rating: "7.6" }
+];
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -23,16 +29,19 @@ function App() {
 
         const data = await response.json();
         const selectedMovies = data
-          .filter((movie) => featuredTitles.includes(movie.title))
-          .sort((first, second) => featuredTitles.indexOf(first.title) - featuredTitles.indexOf(second.title))
+          .filter((movie) => featuredMovies.some((featured) => featured.title === movie.title))
+          .sort((first, second) => featuredMovies.findIndex((featured) => featured.title === first.title) - featuredMovies.findIndex((featured) => featured.title === second.title))
           .slice(0, 5)
-          .map((movie) => ({
-            ...movie,
-            id: movie.imdbId || `animation-${movie.id}`,
-            category: "Animation",
-            poster: movie.posterURL || movie.poster || "",
-            rating: movie.imdbRating || movie.rating || ""
-          }));
+          .map((movie) => {
+            const featured = featuredMovies.find((item) => item.title === movie.title);
+            return {
+              ...movie,
+              id: movie.imdbId || `animation-${movie.id}`,
+              category: featured.category,
+              poster: movie.posterURL || movie.poster || "",
+              rating: featured.rating
+            };
+          });
 
         if (!isCurrent) return;
         if (selectedMovies.length === 0) {
@@ -78,9 +87,12 @@ function App() {
 
 function MovieCatalog({ movies, loading, error, onRetry }) {
   const [search, setSearch] = useState("");
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(search.trim().toLowerCase())
-  );
+  const [category, setCategory] = useState("All");
+  const categories = ["All", ...new Set(movies.map((movie) => movie.category))];
+  const filteredMovies = movies.filter((movie) => {
+    const matchesSearch = movie.title.toLowerCase().includes(search.trim().toLowerCase());
+    return matchesSearch && (category === "All" || movie.category === category);
+  });
 
   return (
     <main className="main-content">
@@ -100,6 +112,13 @@ function MovieCatalog({ movies, loading, error, onRetry }) {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
+      </label>
+
+      <label className="category-filter">
+        <span>Category</span>
+        <select value={category} onChange={(event) => setCategory(event.target.value)}>
+          {categories.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
       </label>
 
       {loading ? (
@@ -128,7 +147,7 @@ function MovieCard({ movie }) {
       </div>
       <div className="movie-info">
         <h2>{movie.title}</h2>
-        <p>★ {movie.rating || "Not rated"}</p>
+        <p>IMDb ★ {movie.rating}</p>
       </div>
     </Link>
   );
@@ -166,7 +185,7 @@ function MovieDetails({ movies, loading }) {
         <div>
           <p>{movie.category}</p>
           <h1>{movie.title}</h1>
-          <p>Rating: {movie.rating || "Not available"}</p>
+          <p>IMDb rating: ★ {movie.rating}</p>
           <p>More information is available on IMDb.</p>
           {movie.imdbId && <a className="imdb-link" href={`https://www.imdb.com/title/${movie.imdbId}/`} target="_blank" rel="noreferrer">View on IMDb</a>}
         </div>

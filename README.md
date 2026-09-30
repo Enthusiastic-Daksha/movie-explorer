@@ -18,7 +18,7 @@ npm run build
 
 ## Movie data
 
-The app uses the public SampleAPIs movie endpoints and does not need an API key. Its records include titles, poster links, and IMDb IDs; rating, year, and plot are shown when the source provides them. IMDb links open the source listing for more information.
+The app uses the public SampleAPIs animation endpoint and does not need an API key. It provides movie titles, posters, and IMDb IDs. Category labels and displayed IMDb ratings are kept in the app for the five selected films; ratings can change over time. IMDb links open each movie's listing.
 
 ## Deploy with Vercel
 
